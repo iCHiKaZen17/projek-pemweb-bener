@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('no_invoice');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('total');
+            $table->string('bukti')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
@@ -28,4 +33,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('payments');
     }
-};
+}
